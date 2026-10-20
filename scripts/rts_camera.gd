@@ -3,13 +3,13 @@ extends Node3D
 ## Cámara isométrica: WASD/flechas o bordes de pantalla para moverse, rueda para zoom.
 
 const PITCH_DEG := 52.0
-const PAN_SPEED := 40.0
+const PAN_SPEED := 60.0
 const EDGE_MARGIN := 12
 const MIN_ZOOM := 18.0
-const MAX_ZOOM := 95.0
+const MAX_ZOOM := 220.0
 
 var camera: Camera3D
-var zoom: float = 48.0
+var zoom: float = 60.0
 var map_half: float = 110.0
 
 
@@ -17,7 +17,7 @@ func _ready() -> void:
 	rotation.y = deg_to_rad(Entity.CAMERA_YAW_DEG)
 	camera = Camera3D.new()
 	camera.fov = 40.0
-	camera.far = 600.0
+	camera.far = 1500.0
 	add_child(camera)
 	camera.make_current()
 	_apply_zoom()

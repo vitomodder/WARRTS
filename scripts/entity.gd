@@ -20,14 +20,13 @@ var _ring: MeshInstance3D
 var _hp_root: Node3D
 var _hp_fg: MeshInstance3D
 var _hp_width: float = 1.5
+## Materiales con el color de la facción (se recolorean si el vehículo es robado).
+var _team_mat: StandardMaterial3D
+var _camo_mat: StandardMaterial3D
 
 
 func get_reward() -> int:
 	return 0
-
-
-func is_enemy_of(other: Entity) -> bool:
-	return other.faction != faction
 
 
 func set_selected(value: bool) -> void:
@@ -42,13 +41,19 @@ func take_damage(amount: float, dmg_type: String, attacker_faction: int) -> void
 		return
 	var mult: float = GameData.DAMAGE_MULT.get(dmg_type, {}).get(armor, 1.0)
 	hp -= amount * mult
-	last_attacker_faction = attacker_faction
+	if attacker_faction != faction:
+		last_attacker_faction = attacker_faction
 	_update_hp_bar()
 	if hp <= 0.0:
 		die(true)
 
 
-## give_reward = false cuando la facción entera es eliminada (no cuenta como baja).
+func heal(amount: float) -> void:
+	hp = minf(max_hp, hp + amount)
+	_update_hp_bar()
+
+
+## give_reward = false cuando no cuenta como baja para nadie.
 func die(give_reward: bool) -> void:
 	if is_dead:
 		return
@@ -59,34 +64,29 @@ func die(give_reward: bool) -> void:
 	queue_free()
 
 
+func _init_team_materials() -> void:
+	var f: Dictionary = GameData.FACTIONS[faction]
+	_team_mat = GameData.make_material(f.color.darkened(0.1))
+	_camo_mat = GameData.make_material(f.camo)
+
+
+func apply_faction_colors() -> void:
+	var f: Dictionary = GameData.FACTIONS[faction]
+	_team_mat.albedo_color = f.color.darkened(0.1)
+	_camo_mat.albedo_color = f.camo
+
+
 func _build_common_visuals(bar_height: float) -> void:
-	_ring = MeshInstance3D.new()
-	var torus := TorusMesh.new()
-	torus.inner_radius = radius * 0.95
-	torus.outer_radius = radius * 1.1
-	_ring.mesh = torus
-	var ring_mat := StandardMaterial3D.new()
-	ring_mat.albedo_color = Color(0.3, 1.0, 0.4)
-	ring_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	_ring.material_override = ring_mat
-	_ring.position.y = 0.05
-	_ring.scale.y = 0.2
+	_ring = GameData.add_mesh(self, GameData.ring(radius * 1.05, 0.15), GameData.unshaded(Color(0.3, 1.0, 0.4)), Vector3(0, 0.05, 0))
 	_ring.visible = false
-	add_child(_ring)
 
 	_hp_width = clampf(radius * 1.8, 1.2, 6.0)
 	_hp_root = Node3D.new()
 	_hp_root.position.y = bar_height
 	_hp_root.rotation.y = deg_to_rad(CAMERA_YAW_DEG)
 	add_child(_hp_root)
-	var bg_mat := StandardMaterial3D.new()
-	bg_mat.albedo_color = Color(0.1, 0.1, 0.1)
-	bg_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	GameData.add_mesh(_hp_root, GameData.box(Vector3(_hp_width + 0.1, 0.22, 0.05)), bg_mat, Vector3.ZERO)
-	var fg_mat := StandardMaterial3D.new()
-	fg_mat.albedo_color = Color(0.3, 0.95, 0.35)
-	fg_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	_hp_fg = GameData.add_mesh(_hp_root, GameData.box(Vector3(_hp_width, 0.15, 0.06)), fg_mat, Vector3(0, 0, 0.01))
+	GameData.add_mesh(_hp_root, GameData.box(Vector3(_hp_width + 0.1, 0.22, 0.05)), GameData.unshaded(Color(0.1, 0.1, 0.1)), Vector3.ZERO)
+	_hp_fg = GameData.add_mesh(_hp_root, GameData.box(Vector3(_hp_width, 0.15, 0.06)), GameData.unshaded(Color(0.3, 0.95, 0.35)), Vector3(0, 0, 0.01))
 	_update_hp_bar()
 
 
