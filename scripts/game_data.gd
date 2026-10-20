@@ -41,86 +41,83 @@ const FACTIONS := [
 const INFANTRY := ["driver", "pilot", "assault", "medic", "engineer", "support", "sniper"]
 const VEHICLES := ["light", "drone", "apc", "heli_transport", "artillery", "tank", "heli_attack"]
 
+## weapon: nombre del arma. deploy: segundos que tarda en aparecer tras comprarla.
 ## crew: "ground"/"air" = tipo de vehículo que puede manejar (infantería) o que necesita (vehículo).
 ## seats: pasajeros que puede llevar. mg: medida de guerra. air_ok: puede disparar a aeronaves.
 const UNITS := {
 	# ---------------- Infantería
 	"driver": {
-		"name": "Conductor", "cost": 4000, "mg": 1, "hp": 50.0, "speed": 4.2,
+		"name": "Conductor", "weapon": "Subfusil", "deploy": 3.0, "cost": 4000, "mg": 1, "hp": 50.0, "speed": 4.2,
 		"range": 12.0, "damage": 5.0, "rate": 0.9, "dmg_type": "bullet", "air_ok": true,
 		"armor": "light", "radius": 0.6, "crew": "ground",
 	},
 	"pilot": {
-		"name": "Piloto", "cost": 6000, "mg": 1, "hp": 50.0, "speed": 4.2,
+		"name": "Piloto", "weapon": "Subfusil", "deploy": 3.0, "cost": 6000, "mg": 1, "hp": 50.0, "speed": 4.2,
 		"range": 12.0, "damage": 5.0, "rate": 0.9, "dmg_type": "bullet", "air_ok": true,
 		"armor": "light", "radius": 0.6, "crew": "air",
 	},
 	"assault": {
-		"name": "Asalto", "cost": 5000, "mg": 2, "hp": 70.0, "speed": 4.3,
+		"name": "Asalto", "weapon": "Fusil de asalto", "deploy": 4.0, "cost": 5000, "mg": 2, "hp": 70.0, "speed": 4.3,
 		"range": 15.0, "damage": 9.0, "rate": 0.7, "dmg_type": "bullet", "air_ok": true,
 		"armor": "light", "radius": 0.6,
 	},
 	"medic": {
-		"name": "Médico", "cost": 8000, "mg": 1, "hp": 60.0, "speed": 4.3,
+		"name": "Médico", "weapon": "Carabina", "deploy": 5.0, "cost": 8000, "mg": 1, "hp": 60.0, "speed": 4.3,
 		"range": 13.0, "damage": 6.0, "rate": 0.9, "dmg_type": "bullet", "air_ok": true,
 		"armor": "light", "radius": 0.6, "heal": 6.0,
 	},
 	"engineer": {
-		"name": "Ingeniero", "cost": 8000, "mg": 1, "hp": 60.0, "speed": 4.0,
+		"name": "Ingeniero", "weapon": "Lanzacohetes", "deploy": 5.0, "cost": 8000, "mg": 1, "hp": 60.0, "speed": 4.0,
 		"range": 18.0, "damage": 50.0, "rate": 3.2, "dmg_type": "rocket", "air_ok": true,
 		"armor": "light", "radius": 0.6, "repair": 20.0, "builder": true,
 	},
 	"support": {
-		"name": "Apoyo", "cost": 10000, "mg": 2, "hp": 85.0, "speed": 3.6,
+		"name": "Apoyo", "weapon": "Ametralladora", "deploy": 6.0, "cost": 10000, "mg": 2, "hp": 85.0, "speed": 3.6,
 		"range": 17.0, "damage": 7.0, "rate": 0.22, "dmg_type": "bullet", "air_ok": true,
 		"armor": "light", "radius": 0.6,
 	},
 	"sniper": {
-		"name": "Francotirador", "cost": 15000, "mg": 2, "hp": 50.0, "speed": 4.0,
+		"name": "Francotirador", "weapon": "Rifle de precisión", "deploy": 8.0, "cost": 15000, "mg": 2, "hp": 50.0, "speed": 4.0,
 		"range": 32.0, "damage": 48.0, "rate": 3.0, "dmg_type": "bullet", "air_ok": false,
 		"armor": "light", "radius": 0.6,
 	},
 	# ---------------- Vehículos (se compran vacíos)
 	"light": {
-		"name": "Vehículo ligero", "cost": 40000, "mg": 4, "hp": 320.0, "speed": 11.0,
+		"name": "Vehículo ligero", "weapon": "Ametralladora pesada", "deploy": 10.0, "cost": 40000, "mg": 4, "hp": 320.0, "speed": 11.0,
 		"range": 18.0, "damage": 10.0, "rate": 0.2, "dmg_type": "bullet", "air_ok": true,
 		"armor": "medium", "radius": 1.7, "crew": "ground", "seats": 3, "vehicle": true,
 	},
 	"drone": {
-		"name": "Dron de ataque", "cost": 60000, "mg": 3, "hp": 140.0, "speed": 14.0,
+		"name": "Dron de ataque", "weapon": "Misiles ligeros", "deploy": 12.0, "cost": 60000, "mg": 3, "hp": 140.0, "speed": 14.0,
 		"range": 16.0, "damage": 45.0, "rate": 3.0, "dmg_type": "rocket", "air_ok": false,
 		"armor": "medium", "radius": 1.2, "crew": "air", "seats": 0, "vehicle": true, "fly": 9.0,
 	},
 	"apc": {
-		"name": "Transporte blindado", "cost": 90000, "mg": 6, "hp": 650.0, "speed": 9.0,
+		"name": "Transporte blindado", "weapon": "Cañón automático", "deploy": 15.0, "cost": 90000, "mg": 6, "hp": 650.0, "speed": 9.0,
 		"range": 18.0, "damage": 14.0, "rate": 0.25, "dmg_type": "bullet", "air_ok": true,
 		"armor": "medium", "radius": 2.1, "crew": "ground", "seats": 8, "vehicle": true,
 	},
 	"heli_transport": {
-		"name": "Helicóptero de transporte", "cost": 120000, "mg": 5, "hp": 500.0, "speed": 18.0,
+		"name": "Helicóptero de transporte", "weapon": "Ametralladora lateral", "deploy": 20.0, "cost": 120000, "mg": 5, "hp": 500.0, "speed": 18.0,
 		"range": 14.0, "damage": 7.0, "rate": 0.3, "dmg_type": "bullet", "air_ok": true,
 		"armor": "medium", "radius": 3.0, "crew": "air", "seats": 8, "vehicle": true, "fly": 14.0,
 	},
 	"artillery": {
-		"name": "Artillería", "cost": 150000, "mg": 6, "hp": 360.0, "speed": 6.0,
+		"name": "Artillería", "weapon": "Obús", "deploy": 20.0, "cost": 150000, "mg": 6, "hp": 360.0, "speed": 6.0,
 		"range": 70.0, "min_range": 15.0, "damage": 120.0, "rate": 6.0, "dmg_type": "shell", "splash": 5.0,
 		"air_ok": false, "armor": "medium", "radius": 2.3, "crew": "ground", "seats": 0, "vehicle": true,
 	},
 	"tank": {
-		"name": "Tanque", "cost": 200000, "mg": 10, "hp": 1200.0, "speed": 6.5,
+		"name": "Tanque", "weapon": "Cañón principal", "deploy": 25.0, "cost": 200000, "mg": 10, "hp": 1200.0, "speed": 6.5,
 		"range": 24.0, "damage": 140.0, "rate": 3.0, "dmg_type": "shell", "splash": 2.0,
 		"air_ok": false, "armor": "heavy", "radius": 2.5, "crew": "ground", "seats": 0, "vehicle": true,
 	},
 	"heli_attack": {
-		"name": "Helicóptero de ataque", "cost": 250000, "mg": 10, "hp": 700.0, "speed": 16.0,
+		"name": "Helicóptero de ataque", "weapon": "Cohetes", "deploy": 30.0, "cost": 250000, "mg": 10, "hp": 700.0, "speed": 16.0,
 		"range": 28.0, "damage": 60.0, "rate": 1.5, "dmg_type": "rocket", "air_ok": true,
 		"armor": "medium", "radius": 3.0, "crew": "air", "seats": 0, "vehicle": true, "fly": 13.0,
 	},
 }
-
-## Segundos que tarda en aparecer una unidad comprada.
-const DEPLOY_TIME_INFANTRY := 3.0
-const DEPLOY_TIME_VEHICLE := 7.0
 
 ## Multiplicador de daño según tipo de daño (fila) y blindaje (columna).
 const DAMAGE_MULT := {
@@ -200,3 +197,40 @@ static func ring(radius: float, width: float) -> TorusMesh:
 	m.rings = 64
 	m.ring_segments = 8
 	return m
+
+
+const ARMOR_NAMES := {"light": "ligero", "medium": "medio", "heavy": "pesado", "building": "edificio"}
+const DMG_NAMES := {"bullet": "bala", "rocket": "cohete", "shell": "proyectil"}
+
+
+## Daño por segundo contra un tipo de blindaje.
+static func dps(unit_type: String, armor_type: String) -> float:
+	var d: Dictionary = UNITS[unit_type]
+	return d.damage / d.rate * DAMAGE_MULT[d.dmg_type][armor_type]
+
+
+## Texto de ayuda con la ficha completa de una unidad.
+static func describe(unit_type: String) -> String:
+	var d: Dictionary = UNITS[unit_type]
+	var lines: Array = [
+		"%s — %s · MG %d · aparece en %d s" % [d.name, format_money(d.cost), d.mg, int(d.deploy)],
+		"Vida %d · blindaje %s · velocidad %.1f m/s" % [d.hp, ARMOR_NAMES[d.armor], d.speed],
+		"%s: %d de daño (%s) cada %.2f s · alcance %d m%s" % [
+			d.weapon, d.damage, DMG_NAMES[d.dmg_type], d.rate, d.range,
+			" (mínimo %d m)" % d.min_range if d.has("min_range") else ""],
+		"Daño/seg: ligero %.0f · medio %.0f · pesado %.0f · edificio %.0f" % [
+			dps(unit_type, "light"), dps(unit_type, "medium"), dps(unit_type, "heavy"), dps(unit_type, "building")],
+	]
+	if not d.air_ok:
+		lines.append("No puede disparar a aeronaves")
+	if d.has("splash"):
+		lines.append("Daño en área: %d m" % d.splash)
+	if d.has("heal"):
+		lines.append("Cura %d de vida/seg a la infantería cercana" % d.heal)
+	if d.has("repair"):
+		lines.append("Repara %d de vida/seg a vehículos y edificios; construye zonas de despliegue" % d.repair)
+	if d.get("vehicle", false):
+		lines.append("Necesita %s · %d pasajeros" % ["piloto" if d.crew == "air" else "conductor", d.get("seats", 0)])
+	elif d.has("crew"):
+		lines.append("Puede manejar %s" % ("aeronaves" if d.crew == "air" else "vehículos de tierra"))
+	return "\n".join(lines)

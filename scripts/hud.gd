@@ -79,6 +79,7 @@ func setup(p_game: Node) -> void:
 		for t in group:
 			var d: Dictionary = GameData.UNITS[t]
 			_buttons[t] = _make_button(row, "%s\n%s · MG %d" % [d.name, GameData.format_money(d.cost), d.mg], game.player_buy.bind(t), Vector2(150, 46))
+			_buttons[t].tooltip_text = GameData.describe(t)
 	var opts := HBoxContainer.new()
 	opts.add_theme_constant_override("separation", 4)
 	bottom_box.add_child(opts)

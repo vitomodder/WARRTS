@@ -365,7 +365,7 @@ func cmd_buy(faction: int, unit_type: String, point_index: int, with_crew: bool)
 	factions[faction].money -= cost
 	_deploy_queue.append({
 		"faction": faction, "type": unit_type, "building": point, "crew": with_crew,
-		"time": GameData.DEPLOY_TIME_VEHICLE if vehicle else GameData.DEPLOY_TIME_INFANTRY,
+		"time": GameData.UNITS[unit_type].deploy,
 	})
 	return true
 
@@ -380,7 +380,7 @@ func cmd_free_squad(faction: int) -> bool:
 		return false
 	factions[faction].free_cooldown = GameData.FREE_SQUAD_COOLDOWN
 	for t in GameData.FREE_SQUAD:
-		_deploy_queue.append({"faction": faction, "type": t, "building": get_base(faction), "crew": false, "time": GameData.DEPLOY_TIME_INFANTRY})
+		_deploy_queue.append({"faction": faction, "type": t, "building": get_base(faction), "crew": false, "time": GameData.UNITS[t].deploy})
 	return true
 
 
