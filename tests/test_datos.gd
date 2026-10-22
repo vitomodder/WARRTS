@@ -1,32 +1,26 @@
-## Comprueba que los datos de unidades están completos y son coherentes.
+## Los datos de data/ se cargan y tienen valores con sentido.
 extends Prueba
 
-const CLAVES := ["name", "cost", "hp", "speed", "range", "damage", "rate", "dmg_type", "armor", "deploy"]
+
+func test_clases_de_soldado() -> void:
+	var letras := {}
+	for par in Partida.REPARTO:
+		var d: UnidadDef = def(par[0])
+		comprobar(d != null, "no se carga %s" % par[0])
+		if d == null:
+			continue
+		iguales(d.id, par[0], "id de %s" % par[0])
+		comprobar(d.coste > 0 and d.vida > 0 and d.velocidad > 0, "%s: coste, vida y velocidad > 0" % d.id)
+		comprobar(d.alcance > 0 and d.vision > 0, "%s: alcance y visión > 0" % d.id)
+		iguales(d.movimiento, UnidadDef.Movimiento.A_PIE, "%s va a pie" % d.id)
+		iguales(d.letra.length(), 1, "%s: letra de icono" % d.id)
+		comprobar(not letras.has(d.letra), "letra %s repetida" % d.letra)
+		letras[d.letra] = true
 
 
-func test_unidades_tienen_todas_las_claves() -> void:
-	for id in GameData.UNITS:
-		var u: Dictionary = GameData.UNITS[id]
-		for clave in CLAVES:
-			comprobar(u.has(clave), "%s no tiene '%s'" % [id, clave])
-
-
-func test_valores_positivos() -> void:
-	for id in GameData.UNITS:
-		var u: Dictionary = GameData.UNITS[id]
-		comprobar(u.cost > 0, "%s: coste debe ser > 0" % id)
-		comprobar(u.hp > 0, "%s: vida debe ser > 0" % id)
-		comprobar(u.range > 0, "%s: alcance debe ser > 0" % id)
-		comprobar(u.rate > 0, "%s: cadencia debe ser > 0" % id)
-
-
-func test_tabla_de_danio_cubre_todo() -> void:
-	for id in GameData.UNITS:
-		var u: Dictionary = GameData.UNITS[id]
-		comprobar(GameData.DAMAGE_MULT.has(u.dmg_type), "%s: tipo de daño '%s' sin tabla" % [id, u.dmg_type])
-		for tipo in GameData.DAMAGE_MULT:
-			comprobar(GameData.DAMAGE_MULT[tipo].has(u.armor), "%s: blindaje '%s' sin fila en '%s'" % [id, u.armor, tipo])
-
-
-func test_tres_facciones() -> void:
-	iguales(GameData.FACTIONS.size(), 3, "número de facciones")
+func test_parametros_de_partida() -> void:
+	var p: ParametrosPartida = load("res://data/partida.tres")
+	iguales(p.paso, 0.1, "paso de simulación")
+	iguales(p.limite_unidades, 100, "límite de unidades (GDD 13.6)")
+	iguales(p.puntos_para_ganar, 100, "puntos para ganar")
+	comprobar(p.dinero_inicial > 0, "dinero inicial > 0")

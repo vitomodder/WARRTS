@@ -14,7 +14,7 @@ RTS multijugador de guerra moderna en **Godot 4.3 + GDScript**. Vito dirige y pr
 
 - Trabaja por fases (prompt maestro de Vito). Al terminar una fase, para y espera su visto bueno.
 - Números en `data/`, nunca en medio del código. Comprueba con `python3 tools/comprobar_gdd.py`.
-- Toda acción del jugador o de la IA es una orden (`cmd_*`, después objetos de `scripts/ordenes/`).
+- Toda acción del jugador o de la IA es una orden (`scripts/ordenes/`) que pasa por `Simulacion.enviar()`. La lógica solo cambia dentro de `Simulacion.avanzar_paso()`.
 - Nunca copies código, datos, nombres ni recursos de otros juegos.
 - Pregunta a Vito cualquier cambio que altere cómo se juega.
 - Commits en español, una rama por fase (`fase-N-nombre`) y una pull request al terminar.
@@ -30,5 +30,15 @@ Skills del proyecto en `.claude/skills/`: `godot-probar`, `unidad-desde-gdd`, `b
 
 ## Estado
 
-- Fase 0 (auditoría y arquitectura): hecha, pendiente del visto bueno de Vito.
-- El código de `scripts/` es el prototipo antiguo. Se sustituye a partir de la Fase 1.
+- Fase 0 (auditoría y arquitectura): hecha.
+- Fase 1 (núcleo: mapa de pruebas, cámara, selección, órdenes, 300 unidades): hecha, pendiente del visto bueno de Vito.
+- El prototipo antiguo se borró en la Fase 1; sigue en el historial de `main`.
+
+## Mapa del código
+
+- `escenas/partida.tscn` + `scripts/partida/partida.gd`: arranque, despliegue, partida automática.
+- `scripts/partida/simulacion.gd`: reloj a paso fijo, órdenes, rutas, separación.
+- `scripts/mundo/`: mapa, rejilla de bloqueo de 1 m, navegación, índice espacial.
+- `scripts/unidades/`: definición (`UnidadDef`), unidad y formaciones.
+- `scripts/ordenes/`: órdenes y `Comandos` (cola y registro).
+- `scripts/interfaz/`: cámara, selección, controles del jugador e interfaz.

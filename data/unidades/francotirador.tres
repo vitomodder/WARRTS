@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnidadDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/unidades/unidad_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "francotirador"
+nombre = "Francotirador"
+letra = "F"
+movimiento = 0
+coste = 15000
+mg = 2
+vida = 70.0
+velocidad = 4.0
+alcance = 500.0
+vision = 400.0
+radio = 0.5
+altura = 1.8

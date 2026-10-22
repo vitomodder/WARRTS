@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="ParametrosPartida" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/partida/parametros_partida.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+dinero_inicial = 1000000
+limite_unidades = 100
+porcentaje_por_baja = 50
+porcentaje_por_baja_hot_zone = 75
+peloton_gratis_umbral = 20000
+peloton_gratis_espera = 90.0
+puntos_para_ganar = 100
+segundos_por_punto = 6.0
+tiempo_herido = 60.0
+tiempo_herido_torniquete = 90.0
+tiempo_reanimacion = 10.0
+fob_maximas = 3
+despliegue_soldados = 5.0
+bajas_helicoptero_combate = 40
+hot_zone_cambio_minutos = 5.0
+hot_zone_aviso = 60.0
+hot_zone_diametro = 400.0
+hot_zone_distancia_fob = 800.0
+paso = 0.1
+celda_indice = 50.0
+rutas_por_paso = 40

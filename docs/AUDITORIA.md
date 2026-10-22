@@ -38,4 +38,4 @@ El prototipo (`scripts/`, unas 2.500 líneas) se hizo el 20 de octubre, antes de
 
 Adaptar el código antiguo pieza a pieza costaría más. Habría que deshacer el diseño viejo de `unit.gd` y `game_data.gd` en cada fase.
 
-El prototipo antiguo queda en la rama `main` hasta que la Fase 1 lo sustituya, así que siempre se puede volver a él.
+El prototipo antiguo se borró en la Fase 1. Sigue en el historial de la rama `main`, así que siempre se puede volver a él.
