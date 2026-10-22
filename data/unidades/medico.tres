@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnidadDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/unidades/unidad_def.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = "medico"
+nombre = "Médico"
+letra = "M"
+movimiento = 0
+coste = 8000
+mg = 1
+vida = 100.0
+velocidad = 4.0
+alcance = 100.0
+vision = 250.0
+radio = 0.5
+altura = 1.8

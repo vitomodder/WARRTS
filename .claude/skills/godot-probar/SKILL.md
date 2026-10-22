@@ -7,6 +7,6 @@ description: Ejecutar las pruebas automáticas, la partida automática o una cap
    `curl -sSL -o g.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip && unzip -q g.zip`
 2. Importa el proyecto una vez: `godot --headless --path . --import`.
 3. Pruebas: `godot --headless --path . -s tests/run_tests.gd`. Deben pasar todas.
-4. Partida automática: `godot --headless --path . -- --autotest`. Debe terminar con «GANA …» y sin bloquearse. Filtra el ruido con `grep -v "mesh_get_surface_count\|Parameter \"m\" is null\|^ *at: "`.
-5. Captura: `xvfb-run -a godot --path . --rendering-driver opengl3 -- --autotest --shot=RUTA.png` y mírala.
-6. Apunta el resultado (pruebas que pasan, ganador y tiempo, FPS si aplica) para el informe de fase.
+4. Partida automática: `godot --headless --path . -- --autotest`. Debe terminar con «RESULTADO: OK». Filtra el ruido con `grep -v "mesh_get_surface_count\|Parameter \"m\" is null\|^ *at: "`.
+5. Captura: `xvfb-run -a godot --path . --rendering-driver opengl3 -- --zoom=45 --captura=RUTA.png` y mírala.
+6. Apunta el resultado (pruebas que pasan, ms por paso de la partida automática, unidades atascadas) para el informe de fase.

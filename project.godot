@@ -12,7 +12,7 @@ config_version=5
 
 config/name="WARRTS"
 config/description="RTS de guerra moderna: 3 facciones, dinero solo por eliminar enemigos."
-run/main_scene="res://main.tscn"
+run/main_scene="res://escenas/partida.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
 [display]
